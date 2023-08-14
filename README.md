@@ -1,5 +1,6 @@
-# **Segmentación RFM**
-El presente repositorio tiene como objetivo brindar una librería en Python que sea capaz de recibir input de las transacciones comerciales para brindar como output una segmentación RFM para la óptima toma de decisiones empresariales.
+# **Segmentación RFM** 📊🤓
+El presente repositorio tiene como objetivo explicar el funcionamiento de la librería ***RFMSegmentation*** 📊 en Python que es capaz de recibir input de las transacciones comerciales de los clientes para retornar como output una segmentación RFM para la óptima toma de decisiones empresariales.
+
 
 
 Debes renombrar las columnas que serán necesarias para el uso de la librería.

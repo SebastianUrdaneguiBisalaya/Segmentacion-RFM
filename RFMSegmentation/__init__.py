@@ -1,1 +1,1 @@
-from segmentation import Segmentation
+from RFMSegmentation import Segmentation

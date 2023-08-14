@@ -7,7 +7,7 @@ VERSION = '0.1.0'
 PACKAGE_NAME = 'RFMSegmentation'
 AUTHOR = 'Sebastian Marat Urdanegui Bisalaya'
 AUTHOR_EMAIL = 'sebasurdanegui@gmail.com'
-URL = 'https://github.com/SebastianUrdaneguiBisalaya/py-portfolioanalytics'
+URL = 'https://github.com/SebastianUrdaneguiBisalaya/Segmentacion-RFM'
 
 LICENSE = 'MIT'
 DESCRIPTION = 'Librería para realizar una segmentación RFM.'
