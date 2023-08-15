@@ -1,5 +1,33 @@
 # **Segmentación RFM** 📊🤓
-El presente repositorio tiene como objetivo explicar el funcionamiento de la librería ***RFMSegmentation*** 📊 en Python que es capaz de recibir input de las transacciones comerciales de los clientes para retornar como output una segmentación RFM para la óptima toma de decisiones empresariales.
+El presente repositorio tiene como objetivo la creación y explicación del funcionamiento de la librería ***RFMSegmentation*** 📊 en Python que es capaz de recibir input de las transacciones comerciales de los clientes para retornar como output una segmentación RFM para la óptima toma de decisiones empresariales.
+
+## **Teoría Segmentación RFM**
+**RFM** (Recency, Frequency and Monetary). Básicamente, es un score para la segmentación de los consumidores enfocado en el análisis de la compra reciente, la frecuencia y el monto de la compra por parte del cliente. 🛒 **En líneas generales, su función es utilizar los patrones de consumo del cliente para identificar el segmento al cual pertenece 🧑‍🤝‍🧑**. 
+
+**Contexto para el ejemplo:**
+
+La empresa desea realizar una segmentación RFM y toma como fecha de corte el 14 de agosto de 2023.
+Sebastian es cliente de SportShoes S.A.C. Él realizó su última compra el 8 de agosto de 2023. Desde que realizó la primera compra del producto de la empresa hasta la fecha de corte, Sebastian realizó 9 compras con un monto total de S/. 5,000.00. 
+
+1. **Recency** 
+   
+   ¿Hace cuánto el cliente realizó su última compra?
+   
+   ***Ejemplo:*** Sebastian realizó su última compra hace 6 días.
+2. **Frequency**
+   
+   ¿Cuál es la frecuencia de compra del cliente?
+
+   ***Ejemplo:***  Sebastian tiene una cantidad de órdenes total de 9 veces.
+3. **Monetary**
+   
+   ¿Cuánto dinero gastó el cliente en sus compras en el establecimiento?
+
+   **Ejemplo:** Sebastian gastó en total S/. 5,000.00 en la compra de productos de la empresa SportShoes S.A.C. (En ocasiones, suele usarse el promedio de los montos de compra.)
+
+## **Pasos para el uso de la librería RFMSegmentation**
+
+
 
 
 
