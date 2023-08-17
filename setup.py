@@ -3,8 +3,8 @@ from setuptools import find_packages, setup
 
 HERE = pathlib.Path(__file__).parent
 
-VERSION = '0.1.0'
-PACKAGE_NAME = 'RFMSegmentation'
+VERSION = '0.0.3'
+PACKAGE_NAME = 'RFMCustomer'
 AUTHOR = 'Sebastian Marat Urdanegui Bisalaya'
 AUTHOR_EMAIL = 'sebasurdanegui@gmail.com'
 URL = 'https://github.com/SebastianUrdaneguiBisalaya/Segmentacion-RFM'

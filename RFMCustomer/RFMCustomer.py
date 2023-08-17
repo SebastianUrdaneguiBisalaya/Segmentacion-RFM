@@ -6,7 +6,7 @@ import warnings
 warnings.filterwarnings('ignore')
 import matplotlib.pyplot as plt
 
-class Segmentation:
+class CustomerSegmentation:
     def __init__(self, dataframe, day:str, positions:list, rfm, segment):
         self.dataframe = dataframe
         self.day = day
@@ -14,7 +14,7 @@ class Segmentation:
         self.rfm = rfm
         self.segment = segment
         
-    def RFM(dataframe, day:str, positions:list):
+    def RFMCustomer(dataframe, day:str, positions:list):
         # Apply variable type transformation from string to datetime
         # The function a string like '20230628' with the format like 'yyyymmdd'.
         dataframe = dataframe.iloc[:, positions]

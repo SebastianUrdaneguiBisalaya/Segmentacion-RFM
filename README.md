@@ -41,6 +41,32 @@ Sebastian es cliente de SportShoes S.A.C. Él realizó su última compra el 8 de
 
 ## **Pasos para el uso de la librería RFMSegmentation**
 
+1. Abrir un notebook en Google Colab (también puedes usar VSCode, Anaconda o cualquier IDE). <a href="https://colab.research.google.com/?hl=es">Clic aquí</a>
+2. Luego de abrir el entorno de Google Colab, debemos inicializar el entorno e importar las librerías.
+<div>
+<img src="./img/img_connect.png">
+</div>
+
+```python
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+```
+
+<div>
+<img src="./img/img2.png">
+</div>
+
+1. Después, debemos instalar la librería **RFMCustomer**
+```python
+pip install RFMCustomer==0.0.3
+```
+<div>
+<img src="./img/img1.png">
+</div>
+
+### **¡Perfecto, podemos hacer uso de la librería!**
+
 
 
 
