@@ -7,12 +7,13 @@ warnings.filterwarnings('ignore')
 import matplotlib.pyplot as plt
 
 class CustomerSegmentation:
-    def __init__(self, dataframe, day:str, positions:list, rfm, segment):
+    def __init__(self, dataframe, day:str, positions:list, rfm, segment, color_gradient = False):
         self.dataframe = dataframe
         self.day = day
         self.positions = positions
         self.rfm = rfm
         self.segment = segment
+        self.color_gradient = color_gradient
         
     def RFMCustomer(dataframe, day:str, positions:list):
         # Apply variable type transformation from string to datetime
@@ -65,14 +66,18 @@ class CustomerSegmentation:
         else:
             print("Verificar que el input `dataframe` sea del tipo dataframe.")
     
-    def RFMTable(rfm):
-        return rfm.groupby("Segment").mean().sort_values("Monetary", ascending = False)
+    def RFMTable(rfm, color_gradient = False):
+        rfm_group = rfm.groupby("Segment").mean().sort_values("Monetary", ascending = False)
+        if color_gradient == True: 
+            return rfm_group[["Recency", "Frequency", "Monetary"]].style.background_gradient(cmap='Blues')
+        else:
+            return rfm_group[["Recency", "Frequency", "Monetary"]]
     
     def RFMAnalysis(rfm):
         dataplot = pd.DataFrame(rfm.groupby("Segment")["SCORE"].count()).apply(lambda x : round(x/len(rfm["SCORE"])*100,2)).sort_values(by = 
                     "SCORE", ascending = True).rename(columns = {'SCORE':'Clientes (%)'})
         fig, ax = plt.subplots(figsize = (8,6), dpi = 70)
-        dataplot.plot(ax = ax, kind = 'barh', color = 'orange')
+        dataplot.plot(ax = ax, kind = 'barh', color = 'mediumaquamarine')
         ax.bar_label(ax.containers[0], fontsize = 12)
         for i in ['bottom', 'left']:
             ax.spines[i].set_color('black')
@@ -85,7 +90,72 @@ class CustomerSegmentation:
         ax.grid(color='gray', linewidth=1, axis='y', alpha=0.4)
         plt.xlabel('Porcentaje de clientes')
         plt.ylabel('Segmento RFM')
-        plt.title("Porcentaje de clientes por segmento", size = 16)
+        plt.title("Customers By Segment (%)", size = 16, fontweight = 'bold')
+        plt.show()
+    
+    def RFMAnalysisByCategory(rfm):
+        rfm_group = round(rfm_group[["Recency", "Frequency", "Monetary"]],2)
+        fig = plt.figure(figsize=(15,8))
+        ax1 = fig.add_subplot(2,2,1)
+        ax1.bar(rfm_group.index, rfm_group["Recency"].sort_values(ascending = False), color = '#C79FEF')
+        plt.xticks(rotation = 90)
+        plt.subplots_adjust(hspace=0.9)
+        ax1.set_title("Recency", size = 14)
+
+        for i in ['bottom', 'left']:
+            ax1.spines[i].set_color('black')
+            ax1.spines[i].set_linewidth(1.5) 
+        right_side = ax1.spines["right"]
+        right_side.set_visible(False)
+        left_side = ax1.spines["left"]
+        left_side.set_visible(False)
+        top_side = ax1.spines["top"]
+        top_side.set_visible(False)
+        bottom_side = ax1.spines["bottom"]
+        bottom_side.set_visible(False)
+        ax1.set_axisbelow(True)
+        ax1.grid(color='gray', linewidth=1, axis='y', alpha=0.4)
+        ax1.bar_label(ax1.containers[0], fontsize = 9)
+
+        ax2 = fig.add_subplot(2,2,2)
+        ax2.bar(rfm_group.index, rfm_group["Frequency"].sort_values(ascending = False), color = "#40E0D0")
+        plt.xticks(rotation = 90)
+        ax2.set_title("Frequency", size = 14)
+
+        for i in ['bottom', 'left']:
+            ax1.spines[i].set_color('black')
+            ax1.spines[i].set_linewidth(1.5) 
+        right_side = ax2.spines["right"]
+        right_side.set_visible(False)
+        left_side = ax2.spines["left"]
+        left_side.set_visible(False)
+        top_side = ax2.spines["top"]
+        top_side.set_visible(False)
+        bottom_side = ax2.spines["bottom"]
+        bottom_side.set_visible(False)
+        ax2.set_axisbelow(True)
+        ax2.grid(color='gray', linewidth=1, axis='y', alpha=0.4)
+        ax2.bar_label(ax2.containers[0], fontsize = 9)
+
+        ax3 = fig.add_subplot(2,1,2)
+        ax3.bar(rfm_group.index, rfm_group["Monetary"].sort_values(ascending = False), color = "#FFA150")
+        ax3.set_title("Monetary", size = 14)
+        for i in ['bottom', 'left']:
+            ax3.spines[i].set_color('black')
+            ax3.spines[i].set_linewidth(1.5) 
+        right_side = ax3.spines["right"]
+        right_side.set_visible(False)
+        left_side = ax3.spines["left"]
+        left_side.set_visible(False)
+        top_side = ax3.spines["top"]
+        top_side.set_visible(False)
+        bottom_side = ax3.spines["bottom"]
+        bottom_side.set_visible(False)
+        ax3.set_axisbelow(True)
+        ax3.grid(color='gray', linewidth=1, axis='y', alpha=0.4)
+        ax3.bar_label(ax3.containers[0], fontsize = 9)
+
+        plt.suptitle("RFM Analysis By Segment", size = 16, fontweight = 'bold')
         plt.show()
         
     def RFMFindClientsBySegment(rfm, segment):
