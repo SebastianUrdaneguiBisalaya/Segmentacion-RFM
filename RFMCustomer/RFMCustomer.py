@@ -94,7 +94,7 @@ class CustomerSegmentation:
         plt.show()
     
     def RFMAnalysisByCategory(rfm):
-        rfm_group = round(rfm_group[["Recency", "Frequency", "Monetary"]],2)
+        rfm_group = round(rfm[["Recency", "Frequency", "Monetary"]],2)
         fig = plt.figure(figsize=(15,8))
         ax1 = fig.add_subplot(2,2,1)
         ax1.bar(rfm_group.index, rfm_group["Recency"].sort_values(ascending = False), color = '#C79FEF')

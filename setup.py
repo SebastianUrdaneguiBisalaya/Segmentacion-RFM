@@ -3,14 +3,14 @@ from setuptools import find_packages, setup
 
 HERE = pathlib.Path(__file__).parent
 
-VERSION = '0.0.3'
+VERSION = '0.1.1'
 PACKAGE_NAME = 'RFMCustomer'
 AUTHOR = 'Sebastian Marat Urdanegui Bisalaya'
 AUTHOR_EMAIL = 'sebasurdanegui@gmail.com'
 URL = 'https://github.com/SebastianUrdaneguiBisalaya/Segmentacion-RFM'
 
 LICENSE = 'MIT'
-DESCRIPTION = 'Librería para realizar una segmentación RFM.'
+DESCRIPTION = 'Library for creating RFM Segmentation in Python.😋'
 LONG_DESC_TYPE = "text/markdown"
 
 
