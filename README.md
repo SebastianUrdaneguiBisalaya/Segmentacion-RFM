@@ -41,6 +41,8 @@ Sebastian es cliente de SportShoes S.A.C. Él realizó su última compra el 8 de
 
 ## **Pasos para el uso de la librería RFMSegmentation**
 
+Pueden descargar el dataset que utilice de ejemplo desde mi perfil de GitHub haciendo clic <a href="https://github.com/SebastianUrdaneguiBisalaya/Segmentacion-RFM/tree/main/data">aquí</a>:
+
 1. Abrir un notebook en Google Colab (también puedes usar VSCode, Anaconda o cualquier IDE). <a href="https://colab.research.google.com/?hl=es">Clic aquí</a>
 2. Luego de abrir el entorno de Google Colab, debemos inicializar el entorno e importar las librerías.
 <div>
@@ -59,7 +61,7 @@ import matplotlib.pyplot as plt
 
 1. Después, debemos instalar la librería **RFMCustomer**
 ```python
-pip install RFMCustomer==0.0.3
+pip install RFMCustomer==0.1.1
 ```
 <div>
 <img src="./img/img1.png">
@@ -68,29 +70,94 @@ pip install RFMCustomer==0.0.3
 ### **¡Perfecto, podemos hacer uso de la librería!**
 
 
+En este caso, tengo un dataset con los siguientes nombre de columnas:
+```python
+Columnas del dataset
+Index(['Row ID', 'Order ID', 'Order Date', 'Ship Date', 'Ship Mode',
+'Customer ID', 'Customer Name', 'Segment', 'Country', 'City', 'State',
+'Postal Code', 'Region', 'Product ID', 'Category', 'Sub-Category',
+'Product Name', 'Sales'],
+      dtype='object')
+```
+En general, nuestro dataset puede tener n-columnas. No obstante, es escencial que se cuente con las columnas que hagan referencia a la identificación del consumidor **(en el presente caso, la columna es Row ID)**, el día en que se ejecutó la venta del producto  o el día en que se generó la fecha de orden **(Order Date)**, una columna de venta total (precio por cantidad) por registro **(Sales)**, en el caso no se cuente la columna de venta total se debe generar una columna producto entre el precio de venta y la cantidad.
 
+Luego, esas columnas escenciales pueden estan nombradas de diferente forma pero es necesario que renombremos esas columnas para hacer el uso de los módulos que se derivan de la clase **RFMCustomer**.
 
+Es preciso mencionar que la clase RFMCustomer requiere de 4 nombre de columnas escenciales: **Order ID**, **Date**, **Customer ID** y **Sales**.
+Recalco, sí o sí se deben tener estos nombres asignados en las columnas. Le asigno el nombre de columna **Order ID** a la columna que haga referencia al ID del registro de transacción o cualquier columna que no tenga valores nulos.
 
-Debes renombrar las columnas que serán necesarias para el uso de la librería.
-Debes identificar en las columnas del dataframe que hagan referencia a la identificación del consumidor, el día en que se ejecutó la venta del producto o el día en que se generó la fecha de orden, una columna de venta total (precio por cantidad) por registro, en el caso no se cuente la columna de venta total se debe generar una columna y, por último, elegir una columna que no tenga valores nulos, puede ser la columna de identificación del registro.
+Dado que nuestro dataset cumple con los nombres de las columnas requeridas por la librería excepto por la columna **Order Date** que debería decir **Date** y hace referencia a la fecha del registro de la transacción comercial o día del pedido, debemos renombrarla.
+
+Te brindo un ejemplo del código en Python
+para renombrar columnas:
 
 ```python
 data = data.rename(columns = {
-    'Identificación del consumidor' : 'Customer ID',
-    'Día en que se ejecutó la venta' : 'Date',
-    'Venta Total' : 'Sales',
-    'Identificación del registo' : 'Order ID'
+    'Order Date' : 'Date
 })
 ```
 
+Después, debemos tomar la columna **Date** y convertirla al formato fecha ***yyyymmdd*** requerido por la librería. De la siguiente forma:
 ```python
-data["Order Date"] = pd.to_datetime(data["Order Date"]).dt.strftime("%Y%m%d")
-data = data.rename(columns = {'Order Date':'Date'})
+data["Date"] = pd.to_datetime(data["Date"]).dt.strftime("%Y%m%d")
 ```
+## Terminado el preprocesamiento de los datos, empezamos con el análisis
+
+1. **Importar la librería**
 
 ```python
-rfm = Segmentation.RFM(data, '20190115', positions = [1,2,5,17])
-Segmentation.RFMTable(rfm)
-Segmentation.RFMAnalysis(rfm)
-Segmentation.RFMFindClientsBySegment(rfm, "Hola")
+from RFMCustomer.RFMCustomer import CustomerSegmentation
 ```
+
+2. **Obtener el dataframe con la Segmentación RFM analizada**
+
+```python
+df = CustomerSegmentation.RFMCustomer(data, '20190115', [1,2,5,17])
+df
+```
+
+**CustomerSegmentation.RFMCustomer()** recibe 3 parámetros:
+
+• **dataframe:** El dataframe que contiene los datos.
+
+• **day:** Indicar en formato string ('yyyymmdd') la fecha máxima hasta donde se desea analizar la información.
+
+• **positions:** Brindar una lista con los índices en el cual se encuentran las columnas requeridas por la librería. **Tener en cuenta que se inicia el conteo desde el índice 0.** En el presente caso, **Order ID** se encuentra en la posición 1, **Order Date** en la posición 2, **Customer ID** en la posición 5 y **Sales** en la posición 17.
+
+3. **Visualización del porcentaje de clientes por segmento**
+
+```python
+segmentation_plot = CustomerSegmentation.RFMAnalysis(df)
+segmentation_plot
+```
+
+4. **Visualización de la tabla que hace referencia a las medidas de resumen de RFM**
+
+```python
+segmentation_table = CustomerSegmentation.RFMTable(df, True)
+segmentation_table
+```
+El módulo **CustomerSegmentation.RFMTable()** recibe 2 parámetros: 
+
+• **rfm:** El dataframe **df** que asignamos en el paso 2.
+
+• **color_gradient:** True si se requiere que la tabla sea coloreada en función de los datos y False si no se requiere colorear. Por defecto, el valor boolean es False.
+
+5. **Obtener la tabla con los clientes que pertenecen a una clase específica.**
+   
+```python
+segmentation_obs = CustomerSegmentation.RFMFindClientsBySegment(df, "Can't looser")
+segmentation_obs
+```
+
+6. **Visualización general de la recencia, frecuencia y cantidad monetaria promedio por segmento**
+
+```python
+general_plot = CustomerSegmentation.RFMAnalysisByCategory(segmentation_table)
+```
+
+**Atento ante alguna observación o duda, por favor escribir al correo sebasurdanegui@gmail.com**
+
+
+
+
