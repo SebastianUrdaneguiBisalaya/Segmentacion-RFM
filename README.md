@@ -13,7 +13,7 @@
 
 
 # **Segmentación RFM** 📊🤓
-El presente repositorio tiene como objetivo la creación y explicación del funcionamiento de la librería ***RFMSegmentation*** 📊 en Python que es capaz de recibir input de las transacciones comerciales de los clientes para retornar como output una segmentación RFM para la óptima toma de decisiones empresariales.
+El presente repositorio tiene como objetivo la creación y explicación del funcionamiento de la librería ***RFMCustomer*** 📊 en Python que es capaz de recibir input de las transacciones comerciales de los clientes para retornar como output una segmentación RFM para la óptima toma de decisiones empresariales.
 
 ## **Teoría Segmentación RFM**
 **RFM** (Recency, Frequency and Monetary). Básicamente, es un score para la segmentación de los consumidores enfocado en el análisis de la compra reciente, la frecuencia y el monto de la compra por parte del cliente. 🛒 **En líneas generales, su función es utilizar los patrones de consumo del cliente para identificar el segmento al cual pertenece 🧑‍🤝‍🧑**. 
@@ -39,7 +39,7 @@ Sebastian es cliente de SportShoes S.A.C. Él realizó su última compra el 8 de
 
    **Ejemplo:** Sebastian gastó en total S/. 5,000.00 en la compra de productos de la empresa SportShoes S.A.C. (En ocasiones, suele usarse el promedio de los montos de compra.)
 
-## **Pasos para el uso de la librería RFMSegmentation**
+## **Pasos para el uso de la librería RFMCustomer**
 
 Pueden descargar el dataset que utilice de ejemplo desde mi perfil de GitHub haciendo clic <a href="https://github.com/SebastianUrdaneguiBisalaya/Segmentacion-RFM/tree/main/data">aquí</a>:
 
@@ -70,7 +70,7 @@ pip install RFMCustomer==0.1.1
 ### **¡Perfecto, podemos hacer uso de la librería!**
 
 
-En este caso, tengo un dataset con los siguientes nombre de columnas:
+En este caso, tengo un dataset con los siguientes nombres de columnas:
 ```python
 Columnas del dataset
 Index(['Row ID', 'Order ID', 'Order Date', 'Ship Date', 'Ship Mode',
@@ -81,9 +81,9 @@ Index(['Row ID', 'Order ID', 'Order Date', 'Ship Date', 'Ship Mode',
 ```
 En general, nuestro dataset puede tener n-columnas. No obstante, es escencial que se cuente con las columnas que hagan referencia a la identificación del consumidor **(en el presente caso, la columna es Row ID)**, el día en que se ejecutó la venta del producto  o el día en que se generó la fecha de orden **(Order Date)**, una columna de venta total (precio por cantidad) por registro **(Sales)**, en el caso no se cuente la columna de venta total se debe generar una columna producto entre el precio de venta y la cantidad.
 
-Luego, esas columnas escenciales pueden estan nombradas de diferente forma pero es necesario que renombremos esas columnas para hacer el uso de los módulos que se derivan de la clase **RFMCustomer**.
+Luego, esas columnas escenciales pueden estar nombradas de diferente forma pero es necesario que renombremos esas columnas para hacer el uso de los módulos que se derivan de la clase **RFMCustomer**.
 
-Es preciso mencionar que la clase RFMCustomer requiere de 4 nombre de columnas escenciales: **Order ID**, **Date**, **Customer ID** y **Sales**.
+Es preciso mencionar que la clase RFMCustomer requiere de 4 nombres de columnas escenciales: **Order ID**, **Date**, **Customer ID** y **Sales**.
 Recalco, sí o sí se deben tener estos nombres asignados en las columnas. Le asigno el nombre de columna **Order ID** a la columna que haga referencia al ID del registro de transacción o cualquier columna que no tenga valores nulos.
 
 Dado que nuestro dataset cumple con los nombres de las columnas requeridas por la librería excepto por la columna **Order Date** que debería decir **Date** y hace referencia a la fecha del registro de la transacción comercial o día del pedido, debemos renombrarla.
@@ -97,7 +97,7 @@ data = data.rename(columns = {
 })
 ```
 
-Después, debemos tomar la columna **Date** y convertirla al formato fecha ***yyyymmdd*** requerido por la librería. De la siguiente forma:
+Después, debemos tomar la columna **Date** y convertirla al formato fecha ***yyyymmdd*** requerido por la librería de la siguiente forma:
 ```python
 data["Date"] = pd.to_datetime(data["Date"]).dt.strftime("%Y%m%d")
 ```
